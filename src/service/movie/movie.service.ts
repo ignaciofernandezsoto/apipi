@@ -6,7 +6,7 @@ export class MovieService {
 
     async getMovies(query?: string, limit?: number, page?: number): Promise<MovieServiceResponse<Movies | ErrorResult>> {
         const payload: MoviesPayloadDto = {
-            quality: QualityDto.TEN_EIGHTY_P,
+            //quality: QualityDto.TEN_EIGHTY_P, Removed until YTS fixes dupe bug
             sort_by: SortDto.DOWNLOAD_COUNT,
             order_by: OrderDto.DESC
         }
@@ -45,7 +45,7 @@ export class MovieService {
                             displayImageUrl: movieDto.large_cover_image || movieDto.medium_cover_image,
                             year: movieDto.year,
                             rating: movieDto.rating,
-                            torrentHash: movieDto.torrents.find(t => t.quality == QualityDto.TEN_EIGHTY_P)!.hash,
+                            torrentHash: (movieDto.torrents.find(t => t.quality == QualityDto.TEN_EIGHTY_P) || movieDto.torrents.find(t => t.quality == QualityDto.SEVEN_TWENTY_P))!.hash,
                             hasSubs: false
                         })
                     )
