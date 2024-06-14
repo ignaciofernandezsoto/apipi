@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const config = {
-    url: process.env.JENKINS_URL!
+    baseUrl: process.env.YIFY_BASE_URL!
 }
 
-export const JenkinsConfig = {
+export const YifyConfig = {
     config
 }

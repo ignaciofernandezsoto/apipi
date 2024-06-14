@@ -10,7 +10,7 @@ pipeline {
                 sh 'touch .env'
 
                 sh 'echo "PORT=${APIPI_PORT}" >> .env'
-                sh 'echo "JENKINS_URL=${APIPI_JENKINS_URL}" >> .env'
+                sh 'echo "YIFY_BASE_URL=${APIPI_YIFY_BASE_URL}" >> .env'
             }
         }
         stage('Create new container name') {
