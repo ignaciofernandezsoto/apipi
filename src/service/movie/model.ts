@@ -1,5 +1,6 @@
 interface Movies {
     movies: Movie[],
+    total: number,
     limit: number,
     page: number
 }

@@ -34,6 +34,7 @@ export class MovieService {
         return {
             success: true,
             data: {
+                total: yifyMoviesResult.data.movie_count,
                 limit: yifyMoviesResult.data.limit || limit || 20,
                 page: yifyMoviesResult.data.page_number || page || 1,
                 movies: (yifyMoviesResult.data.movies || [])
