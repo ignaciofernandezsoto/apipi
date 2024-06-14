@@ -30,7 +30,7 @@ export class MovieService {
                             yifyId: movieDto.id,
                             title: movieDto.title,
                             description: movieDto.description_full,
-                            displayImageUrl: movieDto.medium_cover_image,
+                            displayImageUrl: movieDto.large_cover_image || movieDto.medium_cover_image,
                             year: movieDto.year,
                             rating: movieDto.rating,
                             torrentHash: movieDto.torrents.find(t => t.quality == QualityDto.TEN_EIGHTY_P)!.hash,
