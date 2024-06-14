@@ -8,7 +8,11 @@ export class MovieRoute {
         const router = express.Router()
 
         router.get('/', async (req: Request, res: Response) => {
-            const response = await this.moviesService.getMovies(req.query.q as string);
+            const response = await this.moviesService.getMovies(
+                req.query.q as string,
+                parseInt(req.query.limit as string),
+                parseInt(req.query.page as string),
+            );
             res.send(response);
         });
 

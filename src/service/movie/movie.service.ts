@@ -1,16 +1,26 @@
 import {YifyConnector} from "../../connector/yify/yify.connector";
-import {OrderDto, QualityDto, SortDto} from "../../connector/yify/dto";
+import {MoviesPayloadDto, OrderDto, QualityDto, SortDto} from "../../connector/yify/dto";
 
 export class MovieService {
     constructor(private readonly yifyConnector: YifyConnector) {}
 
-    async getMovies(query: string): Promise<MovieServiceResponse<Movies | ErrorResult>> {
-        const yifyMoviesResult = await this.yifyConnector.getMovies({
-            query_term: query,
+    async getMovies(query?: string, limit?: number, page?: number): Promise<MovieServiceResponse<Movies | ErrorResult>> {
+        const payload: MoviesPayloadDto = {
             quality: QualityDto.TEN_EIGHTY_P,
             sort_by: SortDto.DOWNLOAD_COUNT,
             order_by: OrderDto.DESC
-        })
+        }
+
+        if (query)
+            payload["query_term"] = query
+
+        if (limit)
+            payload["limit"] = limit
+
+        if (page)
+            payload["page"] = page
+
+        const yifyMoviesResult = await this.yifyConnector.getMovies(payload)
 
         if (yifyMoviesResult.status != "ok") {
             return {
@@ -24,6 +34,8 @@ export class MovieService {
         return {
             success: true,
             data: {
+                limit: yifyMoviesResult.data.limit || limit || 20,
+                page: yifyMoviesResult.data.page_number || page || 1,
                 movies: (yifyMoviesResult.data.movies || [])
                     .map(
                         movieDto => ({
