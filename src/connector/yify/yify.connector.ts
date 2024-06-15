@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {
-    MoviePayloadDto,
+    MovieByImdbPayloadDto, MovieByYtsIdPayloadDto,
     MovieResponseDto,
     MoviesPayloadDto,
     MoviesResponseDto,
@@ -26,7 +26,7 @@ export class YifyConnector {
         return data
     }
 
-    async getMovie(params: MoviePayloadDto) {
+    async getMovie(params: MovieByImdbPayloadDto | MovieByYtsIdPayloadDto) {
         const { data } = await axios
             .get<YifyResponseDto<MovieResponseDto>>(
                 `${this.baseUrl || 'https://yts.lt/api/v2/'}movie_details.json`,

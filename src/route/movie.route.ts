@@ -16,6 +16,13 @@ export class MovieRoute {
             res.send(response);
         });
 
+        router.get('/:yifyId', async (req: Request, res: Response) => {
+            const response = await this.moviesService.getMovie(
+                parseInt(req.params.yifyId),
+            );
+            res.send(response);
+        });
+
         return router
     }
 

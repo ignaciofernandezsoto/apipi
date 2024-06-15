@@ -91,9 +91,9 @@ export interface MovieSuggestionsPayloadDto {
 }
 
 /**
- * Returns the information about a specific movie
+ * Makes the return of optional information about a specific movie possible
  */
-export interface MoviePayloadDto extends MovieSuggestionsPayloadDto {
+export interface OptionalMoviePayloadDto {
     /**
      * When set the data returned will include the added image URLs
      * @defaultValue false
@@ -104,6 +104,20 @@ export interface MoviePayloadDto extends MovieSuggestionsPayloadDto {
      * @defaultValue false
      */
     with_cast?: boolean
+}
+
+/**
+ * Returns the information about a specific movie by imbd code
+ */
+export interface MovieByImdbPayloadDto extends OptionalMoviePayloadDto {
+    imdb_id: string
+}
+
+/**
+ * Returns the information about a specific movie by imbd code
+ */
+export interface MovieByYtsIdPayloadDto extends OptionalMoviePayloadDto {
+    movie_id: number
 }
 
 export interface TorrentDto {

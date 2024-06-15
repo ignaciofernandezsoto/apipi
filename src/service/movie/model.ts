@@ -5,16 +5,19 @@ interface Movies {
     page: number
 }
 
-interface Movie {
+interface Movie extends MinimalMovieData {
+    description: string,
+    displayImageUrl: string,
+    year: number,
+    rating: number,
+    hasSubs: boolean,
+}
+
+interface MinimalMovieData {
     yifyId: number,
     imdbId: string,
     title: string,
-    description: string,
-    displayImageUrl: string
-    year: number,
-    rating: number,
-    torrentHash: string
-    hasSubs: boolean
+    torrentHash: string,
 }
 
 interface ErrorResult {

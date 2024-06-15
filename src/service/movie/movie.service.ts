@@ -1,8 +1,9 @@
 import {YifyConnector} from "../../connector/yify/yify.connector";
-import {MoviesPayloadDto, OrderDto, QualityDto, SortDto} from "../../connector/yify/dto";
+import {MoviesPayloadDto, OrderDto, QualityDto, SortDto, TorrentDto} from "../../connector/yify/dto";
 
 export class MovieService {
-    constructor(private readonly yifyConnector: YifyConnector) {}
+    constructor(private readonly yifyConnector: YifyConnector) {
+    }
 
     async getMovies(query?: string, limit?: number, page?: number): Promise<MovieServiceResponse<Movies | ErrorResult>> {
         const payload: MoviesPayloadDto = {
@@ -55,4 +56,39 @@ export class MovieService {
         }
 
     }
+
+    async getMovie(yifyId: number): Promise<MovieServiceResponse<MinimalMovieData | ErrorResult>> {
+        const yifyMoviesResult = await this.yifyConnector.getMovie({
+            movie_id: yifyId
+        })
+
+        if (yifyMoviesResult.status != "ok") {
+            return {
+                success: false,
+                data: {
+                    message: yifyMoviesResult.status_message
+                }
+            }
+        }
+
+        const movieDto = yifyMoviesResult.data.movie
+
+        return {
+            success: true,
+            data: {
+                yifyId: movieDto.id,
+                imdbId: movieDto.imdb_code,
+                title: movieDto.title,
+                torrentHash: this.getTorrentHash(movieDto.torrents),
+            }
+        }
+    }
+
+    private getTorrentHash(torrents: readonly TorrentDto[]): string {
+        return (
+            torrents.find(t => t.quality == QualityDto.TEN_EIGHTY_P) ||
+            torrents.find(t => t.quality == QualityDto.SEVEN_TWENTY_P)
+        )!.hash
+    }
+
 }
