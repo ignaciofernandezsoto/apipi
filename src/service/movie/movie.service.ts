@@ -41,6 +41,7 @@ export class MovieService {
                     .map(
                         movieDto => ({
                             yifyId: movieDto.id,
+                            imdbId: movieDto.imdb_code,
                             title: movieDto.title,
                             description: movieDto.description_full,
                             displayImageUrl: movieDto.large_cover_image || movieDto.medium_cover_image,

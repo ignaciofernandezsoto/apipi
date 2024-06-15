@@ -7,6 +7,7 @@ interface Movies {
 
 interface Movie {
     yifyId: number,
+    imdbId: string,
     title: string,
     description: string,
     displayImageUrl: string
