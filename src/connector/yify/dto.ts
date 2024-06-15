@@ -4,6 +4,7 @@ export enum QualityDto {
     ALL = 'All',
     SEVEN_TWENTY_P = '720p',
     TEN_EIGHTY_P = '1080p',
+    FOUR_K = '2160p',
     THREE_D = '3D',
 }
 

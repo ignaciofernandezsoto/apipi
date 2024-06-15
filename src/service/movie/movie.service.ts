@@ -86,6 +86,7 @@ export class MovieService {
 
     private getTorrentHash(torrents: readonly TorrentDto[]): string {
         return (
+            torrents.find(t => t.quality == QualityDto.FOUR_K) ||
             torrents.find(t => t.quality == QualityDto.TEN_EIGHTY_P) ||
             torrents.find(t => t.quality == QualityDto.SEVEN_TWENTY_P)
         )!.hash
